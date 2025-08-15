@@ -1,17 +1,14 @@
-Rusgit: A Git Clone in Rust
+# Rusgit: A Git Clone in Rust
 
 Rusgit is a functional clone of the Git version control system, built from the ground up in Rust. This project was undertaken as a learning exercise to deeply understand the internal data model and architecture of Git. It implements the fundamental "plumbing" and "porcelain" commands that power Git's core functionality.
+
 Table of Contents
 
-    How Git Works Under the Hood
-
-    Project Architecture
-
-    Features
-
-    Setup and Installation
-
-    How to Use (End-to-End Test)
+How Git Works Under the Hood
+Project Architecture
+Features
+Setup and Installation
+How to Use (End-to-End Test)
 
 How Git Works Under the Hood
 
@@ -76,122 +73,79 @@ Setup and Installation
 
 To get rusgit running, you'll need the Rust toolchain installed on your system.
 
-    Clone the repository:
-    code Bash
-
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
-git clone <your-repo-url>
+Clone the repository:
+```
+git clone https://github.com/sanchit-4/rusgit
 cd rusgit
-
+```
   
 
 Build the project:
-code Bash
-
-    IGNORE_WHEN_COPYING_START
-    IGNORE_WHEN_COPYING_END
-
-        
+```
     cargo build
-
+```
       
 
-    For an optimized release build, use cargo build --release. The executable will be located at target/release/rusgit.
+For an optimized release build, use cargo build --release. The executable will be located at target/release/rusgit.
 
-How to Use (End-to-End Test)
+# How to Use (End-to-End Test)
 
 You can use rusgit to initialize a repository, add files, and create a commit history. All commands should be run from the project's root directory.
 
 Here is a complete workflow to test all functionality:
 
-    Setup a Test Directory:
-    code Bash
-
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
-# Create a clean directory for our test
+```
 mkdir test_repo
 cd test_repo
-
+```
   
 
 Initialize the Repository:
-code Bash
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+```
 cargo run -- init .
-
+```
   
 
 Create a File and Stage It:
-code Bash
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+``` 
 echo "My First Commit" > README.md
 cargo run -- add README.md
-
+```
   
 
 Make Your First Commit:
-code Bash
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+```   
 cargo run -- commit -m "Initial commit of README"
-
+```
   
 
 Make Changes and a Second Commit:
-code Bash
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
-# Modify the file and create a new one
+```
 echo "An update." >> README.md
 echo "fn main() {}" > main.rs
+```
 
-# Add both files to the staging area
+Add both files to the staging area
+```
 cargo run -- add README.md main.rs
-
-# Commit the changes
+```
+Commit the changes
+```
 cargo run -- commit -m "Add main.rs and update README"
-
+```
   
 
 Verify the History (Manually):
-You can inspect the state of your repository using rusgit's own plumbing commands.
-
-    Find the latest commit hash:
-    code Bash
-
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+``` 
 cat .git/refs/heads/main
-
+```
   
 
 Inspect that commit:
 Take the hash from the previous command and run:
-code Bash
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+```
 cargo run -- cat-file <latest-commit-hash> -p
-
+```
   
 
 You will see that its parent field points to the hash of your first commit, proving that the history is correctly linked.
