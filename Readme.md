@@ -82,7 +82,7 @@ cd rusgit
 
 Build the project:
 ```
-    cargo build
+cargo build
 ```
       
 
